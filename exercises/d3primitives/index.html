@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+        
+   <!-- <style type="text/css">   internal CSS file               
+        polygon {
+            transform: translate(400px, 0);
+        }
+    </style>-->   <!--a global way of transform a polygon-->
+
+    </head>
+    <body>
+        <script>
+            d3.select('body') //container for svg
+              .append('svg')
+              .attr('width', window.innerWidth)
+              .attr('height', 800); 
+              
+            
+            var svg = d3.select('svg'); //could selectAll
+            
+            svg.append('circle')
+                .attr('r', 20)
+                .attr('cx', 200)
+                .attr('cy', 75);
+               
+            svg.append('rect')
+               .attr('width', 10) //corner for d3 rectangle
+               .attr('height',100)
+               .attr('x', 300)
+               .attr('y', 50)  //y goes downward
+               .attr('width', 50)
+               .attr('height', 50);
+            
+            svg.append('polygon')
+               .attr('transform', 'translate(120,0) scale(2)')
+               .attr('points','60,30 100,50 100,90 60,110 20,90 20,50');
+            
+        </script>
+    </body>
+    
+</html>
