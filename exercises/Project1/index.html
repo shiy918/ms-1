@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <style type= "text/css">
+        body {
+            font-family:sans-serif;
+            background: black;
+        }
+
+    </style>
+
+    
+    <body>
+        <script>
+            var graph = d3.select('body')     //select body
+                          .append('svg')
+                          .attr('width', window.innerWidth)
+                          .attr('height', window.innerHeight);
+            
+            var China=[];
+            
+            d3.csv('wiid.csv', function(error, data) {
+                if (error) throw error;
+                
+                
+                 //  select country and data source
+                data.forEach(function(d){
+                   if (d.Country == 'China' && d.Source =='World Bank 2016' && d.AreaCovr == 'Rural') {
+                         d.Gini = + d.Gini;
+                         d.Year = + d.Year;
+                         China.push(d.Year + '|' + d.Gini);
+                      }
+              
+                })
+                
+                svg(China);
+            });  
+                       
+            
+            
+            function svg(data) {
+                
+                var Ginis=[];
+                var Years=[]; 
+                
+                for(i in data){
+                    Ginis.push(Math.round(data[i].split('|')[1]));
+                    Years.push(data[i].split('|')[0]);
+                }
+                
+                var max = d3.max(Ginis);
+    
+                var x = d3.scaleLinear()
+                          .domain([0, China.length])          
+                          .range([10, window.innerWidth]);
+                
+                var y = d3.scaleLinear()
+                          .domain([0, max])
+                          .range([0,window.innerHeight]);
+                         
+                graph.append('g')                    //element g
+                     .attr('id', 'group');           //create an id: group
+                
+                var group = graph.select('#group')   //graph in id group
+                                 .selectAll('g')     //in all g elements under group
+                                 .data(data)        //load data 
+                                 .enter()
+                                 .append('g')
+            
+                
+                group.append('circle')
+                     .attr('class','dots')
+                     .attr('cx', function(d,i){ return x(i);})
+                     .attr('cy', function(d,i){ return window.innerHeight+100-y(Ginis[i]);})
+                     .attr('r', 5)
+                     .style('fill','red');
+                
+               
+                group.append('text')
+            	     .text(function(d,i){ return Years[i];})
+            	     .attr('transform', function(d, i) { return 'translate('+x(i)+','+(window.innerHeight*2/3)+')'; })
+            	     .style('font-size', 15)
+            	     .style('fill','white');
+            	
+            	group.append('text')
+            	     .text(function(d,i){ return Ginis[i];})
+            	     .attr('transform', function(d,i){ return 'translate('+x(i)+','+(window.innerHeight+80-y(Ginis[i]))+')';})
+            	     .style('font-size',10)
+            	     .style('fill','grey');
+            	     
+            	group.append('text')
+            	     .text('The Rural Economical Changes in China(1981-2013)')
+            	     .attr('transform', 'translate('+window.innerWidth/3+',15)')
+            	     .style('font-size',15)
+            	     .style('fill','white');
+                
+                    
+             }
+            
+            
+        </script>
+    </body>
+</html>

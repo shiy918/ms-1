@@ -17,22 +17,38 @@
                 
                 console.log(data);
                 
-                data.forEach(function(d,i) {
-                    svg.append('text')
-                       .text(i+ ')' + d.amount +'|' +d.unit + '|' + d.item + '|' +d.source)
-                       .attr('x', window.innerWidth/2)
-                       .attr('y', i*20 + 20)
-                       .style('text-anchor', 'middle')
-                       .style('fill', function(){
-                           if(d.source=='store')
-                              return 'rgb(0,255,0)';
-                           else
-                              return 'lightgray';
-                   });
+               // data.forEach(function(d,i) {                       //i the index for iteration, d is the actual data 
+               //     svg.append('text')
+              //         .text(i+ ')' + d.amount +'|' +d.unit + '|' + d.item + '|' +d.source)
+              //         .attr('x', window.innerWidth/2)
+              //         .attr('y', i*20 + 20)
+              //         .style('text-anchor', 'middle')
+              //         .style('fill', function(){
+              //             if(d.source=='store')
+              //                return 'rgb(0,255,0)';
+              //             else
+              //                return 'lightgray';
+              //     });
                    
                 
-                });
-            
+              //  });
+                   
+                svg.selectAll('.item')   
+                   .data(data)
+                   .enter()             //join the array with item
+                   //.text(i+ ')' + d.amount +'|' +d.unit + '|' + d.item + '|' +d.source)
+                   .append('text')
+                   .attr('class','item')
+                   .text(function(d){ return d.amount + '|' + d.unit + '|' + d.item + '|'+d.source })
+                   .attr('x', window.innerWidth/2)
+                   .attr('y', function(d,i) {return (i+1)*30;})
+                   .style('text-anchor', 'middle')
+                   .style('fill', function(d){
+                       if(d.source == 'store')
+                          return 'rgb(0, 255, 0)';
+                       else
+                          return 'darkgray';
+                   });
             });    
 
         </script>
