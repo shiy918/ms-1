@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--p5js download: https://p5js.org/download/-->
+    <!--Content Delivery Network (CDN): https://cdnjs.com/libraries/p5.js-->
+    <title>Word Frequency</title>
+    <!--p5 core library, minified-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.13/p5.min.js" type="text/javascript"></script>
+    <!--p5 interaction with the DOM-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.13/addons/p5.dom.min.js" type="text/javascript"></script>
+
+    <script>
+        var dictionary=[];
+        var wordCount;
+        var count=1;
+        
+        
+       function setup() {
+            createCanvas(windowWidth, windowHeight);
+            loadStrings('education.txt', analyze);
+            
+            frameRate(5000);
+            //  noLoop();
+        }
+        
+        function analyze(education) {
+            
+            education.forEach(function(phrases){         //go through each phrases in the text
+                
+                phrases = phrases.replace(/[^\w\s]/gi,'');   // replace all special characters
+                
+                var words = phrases.split(' ');          //one tap for each word, no tap for each letter, two taps for the whole line
+                //  console.log(words);
+                words.forEach(function(word){        //go through each word 
+                    
+                    wordCount = dictionary.filter(function(element){   
+                        return element.word == word;       //{word:''}
+                    })       
+                    
+                    if (wordCount.length)
+                      wordCount[0].count++;              //{count:}
+                    else 
+                      dictionary.push({word:word,count:1});
+                      
+                });
+                
+                 dictionary.sort(function(a,b){
+                    return b.count-a.count;
+                 });
+                 
+              });
+            
+               console.log(dictionary);
+               display();
+               draw();
+          }
+          
+         
+        
+    
+        function display(){
+            
+             background(20);
+             translate(200,height/4);
+            
+     
+            dictionary.forEach(function(element){
+
+                //highlight the key words among the most frequent words
+                if (element.count >=10){
+                    
+                    fill('black')
+                    
+                    if(element.word == "secondary"){
+                        fill('orange');
+                        
+                    }
+                    
+                    if (element.word =="Africa"){
+                        fill('white');
+                    }
+                    
+                    if(element.word === "enrolment"){
+                        fill('red');
+                        
+                    }
+                
+                    textSize(element.count*5);
+                    if(element.word === "enrolment"){
+                        textSize(200);
+                    }
+                    
+                    text(element.word,0,element.count);
+                    translate(0,50);
+                }
+         
+                //show less frequent words and divide them into two groups
+                else if(element.count<=9 && element.count>4 ) {
+                    
+                  count++                
+                  
+                  fill(100);
+
+                  textSize(element.count*2);
+                  text(element.word,count*100,50);
+                  translate(-39,0);
+                }
+                
+                else if (element.count <=4 && element.count>1){
+                    count++
+                    
+                    fill(100);
+                    textSize(element.count*3);
+                    text(element.word, count*100,100);
+                    translate(-124,0)
+                }
+                    
+              textWidth(element.count);
+        })
+        
+    }
+    
+    function draw(){
+        
+        fill(200);
+        textSize(10);
+        
+         //go through the dictionary and select the words that only appeared once
+         dictionary.forEach(function(element){
+            //  count++
+            
+             if(element.count==1){
+                 count++ 
+               
+                 text(element.word, width*2/3,count*8);
+             
+             }
+             
+            translate(0,-200);
+             
+         })
+    }
+    
+
+    
+     </script>
+  </head>
+  <body>
+  </body>
+</html>
