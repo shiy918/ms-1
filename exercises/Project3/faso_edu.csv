@@ -1,0 +1,4 @@
+Country,Country_Code,Indicator_Name,Indicator_Code,one,two,three,four,five,six,
+Burkina Faso,BFA,"School enrollment, secondary, male (% gross)",SE.SEC.ENRR.MA,26.7239093780518,28.5859298706055,30.6857604980469,32.3717498779297,35.0606918334961,,
+Burkina Faso,BFA,"School enrollment, secondary, female (% gross)",SE.SEC.ENRR.FE,20.8651504516602,23.2027492523193,25.9647006988525,28.2283992767334,32.2248611450195,,
+Burkina Faso,BFA,"School enrollment, secondary (% gross)",SE.SEC.ENRR,23.8452091217041,25.9408397674561,28.3657302856445,30.3352699279785,33.6666603088379,,

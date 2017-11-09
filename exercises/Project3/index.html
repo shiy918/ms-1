@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Secondary Education Enrollement Rates</title>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <link rel='stylesheet' href='bootstrap.min.css'>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        
+        <style>
+            
+            .container{
+                max-width:80%;
+                max-height:80%;
+            }
+            
+            .nav-link{
+                
+            }
+            
+            /*footer {*/
+            /*    background-color:grey;*/
+            /*    font-size:20px;*/
+            /*    position: fixed;*/
+            /*    width: 100%;*/
+            /*    bottom: 0;*/
+            /*    min-height: 20px;*/
+            /*    box-shadow: 0px 0px 25px white;*/
+            /*}*/
+            
+            /*footer div {*/
+            /*    border: 10px;*/
+            /*    padding: 1em;*/
+            /*}*/
+            
+            
+        </style>
+    </head>
+    <body>
+        <header>
+          <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+              <a class="navbar-brand" href="#">Secondary Education Enrollment Rates</a>
+              <br>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                 <ul class="navbar-nav mr-auto">
+                   <li class="nav-item active">
+                       <b><a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a></b>
+                   </li>  
+                   <li class="nav-item">
+                       <a class="nav-link" href="burkina.html">Burkina Faso</a>
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link" href="ghana.html">Ghana</a>
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link" href="tanzania.html">Tanzania</a>
+                   </li>
+              </div>
+          </nav>
+         
+        </header>
+            
+        
+        <div class="container">
+            <div class="mx-auto" style="width:800px; height:500px">
+               <svg width="100%" height="100%"></svg>
+                  <text align='left' x='0' y='25px' style="font-family:Times">
+                  The September 2015 adoption of the 2030 Agenda for Sustainable Development and 
+                  its 17 Sustainable Development Goals (SDGs) has drawn considerable attention to 
+                  income inequality in sub-Saharan Africa (SSA). To achieve the goal of ‘leaving no one behind’ 
+                  by 2030.
+               </text>
+            </div>
+        </div>
+        
+        
+        <script>
+             var body=d3.select('body');
+            //  console.log(body);
+             
+             var svg=body.select('svg');
+            //  console.log(svg.style('width'));
+             
+             svg.append('text')
+                .attr('class','intro')
+                .text('Click above to see the enrollment rates of each country.')
+                .attr('transform','translate(100,250)')
+                .style('fill','black')
+                .style('font-size',20);
+                
+               
+            
+        </script>
+        
+    </body>
+</html>

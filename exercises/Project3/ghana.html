@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ghana</title>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <link rel='stylesheet' href='bootstrap.min.css'>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <style>
+            body{
+                background-color:#fcfcf9;
+            }
+        
+            .container{
+                max-width:80%;
+                max-height:80%;
+            }
+            
+            /*.fill1  .fill2{*/
+            /*    font-size:5px;*/
+            /*}*/
+        
+            
+            footer {
+                background-color:#f3eeee;
+                font-size:20px;
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+                height: 100px;
+                box-shadow: 0px 0px 25px white;
+            }
+            
+            footer div {
+                border: 10px;
+                padding: 1em;
+            }
+            
+        </style>    
+        
+    </head>
+    <body>
+        <header>
+          <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+              <a class="navbar-brand" href="#">Secondary Education Enrollment Rates</a>
+              <br>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                 <ul class="navbar-nav mr-auto">
+                   <li class="nav-item">
+                       <a class="nav-link" href="index.html">Home</a>
+                   </li>  
+                   <li class="nav-item">
+                       <a class="nav-link" href="burkina.html">Burkina Faso</a>
+                   </li>
+                   <li class="nav-item active">
+                       <a class="nav-link" href="#">Ghana</a>  
+                       <!--<span class="sr-only">(current)</span>-->
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link" href="tanzania.html">Tanzania</a>
+                   </li>
+              </div>
+          </nav>
+         
+        </header>
+        
+        <div class="container">
+            <div class="mx-auto" style="width:800px; height:800px">
+               <svg width="100%" height="100%"></svg>
+        </div>
+    
+        
+        <!--<footer>-->
+        <!--    <div class="row">-->
+                <!--<div class="col-sm-2">-->
+                <!--    <rect x='25' y='25'></rect>-->
+                <!--</div>-->
+                <!--<div class="col-md-3"></div>-->
+                <!--<div class="col-md-6"></div>-->
+                <!--<div class="col-md-3"></div>-->
+        <!--    </div>-->
+        <!--</footer>-->
+        
+        <script>
+            
+            var body=d3.select('body');
+            
+            var graph=body.select('.mx-auto')
+                          .select('svg');
+                          
+            // var svgWidth=d3.select('.mx-auto').attr('width');
+            // var svgHeight=d3.select('.mx-auto').attr('height');
+                          
+                
+            d3.csv('Ghana_edu.csv',function(error,data){
+                if (error) throw error;
+                //  console.log(data);
+                
+               svg(data);
+                 
+           })
+           
+           
+            function svg(data){   
+            
+            var one=[];
+            var two=[];
+            var three=[];
+            var four=[];
+            var five=[];
+            var six=[];
+    
+            for (var i in data){
+                one.push(Math.round(data[i].one));
+                two.push(Math.round(data[i].two));
+                three.push(Math.round(data[i].three));
+                four.push(Math.round(data[i].four));
+                five.push(Math.round(data[i].five));
+                six.push(Math.round(data[i].five));
+            }
+            
+            console.log(data);
+            console.log(one);
+            
+         
+             graph.append('g').attr('id','group');
+             var group=graph.select('#group');
+              
+    
+             
+             group.append('rect').attr('class','rec').attr('x',25).attr('y',100).attr('width',100).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill1').attr('x',25).attr('y',300-one[2]*2).attr('width',100).attr('height',one[2]*2).style('fill','rgb(216,36,36)')
+                .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',48)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(one[2]+'%')
+                        .attr('font-size',25);
+                });
+                
+                
+             group.append('rect').attr('class','female').attr('x',25).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('clss','fill2').attr('x',25).attr('y',550-one[1]*2).attr('width',48).attr('height',one[1]*2).style('fill','rgb(237,109,145)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',35)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(one[1]+'%')
+                        .attr('font-size',10);
+                });
+                
+                
+             group.append('rect').attr('class','male').attr('x',77).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill3').attr('x',77).attr('y',550-one[0]*2).attr('width',48).attr('height',one[0]*2).style('fill','rgb(36,150,216)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',89)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(one[0]+'%')
+                        .attr('font-size',10);
+                });
+                
+             group.append('text').attr('class','text').text('2011').attr('transform','translate(40,335)').style('font-size',30);
+             group.append('text').attr('class','tfemale').text('Female').attr('transform','translate(30,560)').style('font-size',10);
+             group.append('text').attr('class','tmale').text('Male').attr('transform','translate(85,560)').style('font-size',10);
+             
+             group.append('rect').attr('class','rec').attr('x',150).attr('y',100).attr('width',100).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill1').attr('x',150).attr('y',300-two[2]*2).attr('width',100).attr('height',two[2]*2).style('fill','rgb(216,36,36)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',175)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(two[2]+'%')
+                        .attr('font-size',25);
+                });
+                
+             group.append('rect').attr('class','female').attr('x',150).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('clss','fill2').attr('x',150).attr('y',550-two[1]*2).attr('width',48).attr('height',two[1]*2).style('fill','rgb(237,109,145)')
+                   .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',159)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(two[1]+'%')
+                        .attr('font-size',10);
+                });
+                
+             group.append('rect').attr('class','male').attr('x',202).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill3').attr('x',202).attr('y',550-two[0]*2).attr('width',48).attr('height',two[0]*2).style('fill','rgb(36,150,216)')
+                  .on('mouseover',function(){
+                   d3.select('#group')
+                        .append('text')
+                        .attr('x',213)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(two[0]+'%')
+                        .attr('font-size',10);
+            });
+                
+             group.append('text').attr('class','text').text('2012').attr('transform','translate(165,335)').style('font-size',30);
+             group.append('text').attr('class','tfemale').text('Female').attr('transform','translate(155,560)').style('font-size',10);
+             group.append('text').attr('class','tmale').text('Male').attr('transform','translate(210,560)').style('font-size',10);
+             
+             group.append('rect').attr('class','rec').attr('x',275).attr('y',100).attr('width',100).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill1').attr('x',275).attr('y',300-three[2]*2).attr('width',100).attr('height',three[2]*2).style('fill','rgb(216,36,36)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',300)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(three[2]+'%')
+                        .attr('font-size',25);
+                });
+             group.append('rect').attr('class','female').attr('x',275).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('clss','fill2').attr('x',275).attr('y',550-three[1]*2).attr('width',48).attr('height',three[1]*2).style('fill','rgb(237,109,145)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',288)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(three[1]+'%')
+                        .attr('font-size',10);
+                });
+             group.append('rect').attr('class','male').attr('x',327).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill3').attr('x',327).attr('y',550-three[0]*2).attr('width',48).attr('height',three[0]*2).style('fill','rgb(36,150,216)')
+                    .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',338)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(three[0]+'%')
+                        .attr('font-size',10);
+                });
+             group.append('text').attr('class','text').text('2013').attr('transform','translate(290,335)').style('font-size',30);
+             group.append('text').attr('class','tfemale').text('Female').attr('transform','translate(280,560)').style('font-size',10);
+             group.append('text').attr('class','tmale').text('Male').attr('transform','translate(340,560)').style('font-size',10);
+             
+             group.append('rect').attr('class','rec').attr('x',400).attr('y',100).attr('width',100).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill1').attr('x',400).attr('y',300-four[2]*2).attr('width',100).attr('height',four[2]*2).style('fill','rgb(216,36,36)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',425)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(four[2]+'%')
+                        .attr('font-size',25);
+                });
+                
+             group.append('rect').attr('class','female').attr('x',400).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('clss','fill2').attr('x',400).attr('y',550-four[1]*2).attr('width',48).attr('height',four[1]*2).style('fill','rgb(237,109,145)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',415)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(four[1]+'%')
+                        .attr('font-size',10);
+                });
+                
+             group.append('rect').attr('class','male').attr('x',452).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill3').attr('x',452).attr('y',550-four[0]*2).attr('width',48).attr('height',four[0]*2).style('fill','rgb(36,150,216)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',465)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(four[0]+'%')
+                        .attr('font-size',10);
+                });
+                
+             group.append('text').attr('class','text').text('2014').attr('transform','translate(415,335)').style('font-size',30);
+             group.append('text').attr('class','tfemale').text('Female').attr('transform','translate(408,560)').style('font-size',10);
+             group.append('text').attr('class','tmale').text('Male').attr('transform','translate(465,560)').style('font-size',10);
+             
+             
+             group.append('rect').attr('class','rec').attr('x',525).attr('y',100).attr('width',100).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill1').attr('x',525).attr('y',300-five[2]*2).attr('width',100).attr('height',five[2]*2).style('fill','rgb(216,36,36)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',550)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(five[2]+'%')
+                        .attr('font-size',25);
+                });
+                
+             group.append('rect').attr('class','female').attr('x',525).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('clss','fill2').attr('x',525).attr('y',550-five[1]*2).attr('width',48).attr('height',five[1]*2).style('fill','rgb(237,109,145)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',535)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(five[1]+'%')
+                        .attr('font-size',10);
+                });
+                
+             group.append('rect').attr('class','male').attr('x',577).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill3').attr('x',577).attr('y',550-five[0]*2).attr('width',48).attr('height',five[0]*2).style('fill','rgb(36,150,216)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',588)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(five[0]+'%')
+                        .attr('font-size',10);
+                });
+                
+             group.append('text').attr('class','text').text('2015').attr('transform','translate(540,335)').style('font-size',30);
+             group.append('text').attr('class','tfemale').text('Female').attr('transform','translate(530,560)').style('font-size',10);
+             group.append('text').attr('class','tmale').text('Male').attr('transform','translate(590,560)').style('font-size',10);
+             
+             group.append('rect').attr('class','rec').attr('x',650).attr('y',100).attr('width',100).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill1').attr('x',650).attr('y',300-six[2]*2).attr('width',100).attr('height',six[2]*2).style('fill','rgb(216,36,36)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',680)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(six[2]+'%')
+                        .attr('font-size',25);
+                });
+                
+             group.append('rect').attr('class','female').attr('x',650).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('clss','fill2').attr('x',650).attr('y',550-six[1]*2).attr('width',48).attr('height',six[1]*2).style('fill','rgb(237,109,145)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',660)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(six[1]+'%')
+                        .attr('font-size',10);
+                });
+                
+             group.append('rect').attr('class','male').attr('x',702).attr('y',350).attr('width',48).attr('height',200).style('fill','white').style('fill-opacity',0.8).style('stroke','grey');
+             group.append('rect').attr('class','fill3').attr('x',702).attr('y',550-six[0]*2).attr('width',48).attr('height',six[0]*2).style('fill','rgb(36,150,216)')
+                  .on('mouseover',function(){
+                    d3.select('#group')
+                        .append('text')
+                        .attr('x',718)
+                        .attr('y',d3.select(this).attr('y'))
+                        .text(six[0]+'%')
+                        .attr('font-size',10);
+                });
+                
+             group.append('text').attr('class','text').text('2016').attr('transform','translate(665,335)').style('font-size',30);
+             group.append('text').attr('class','tfemale').text('Female').attr('transform','translate(658,560)').style('font-size',10);
+             group.append('text').attr('class','tmale').text('Male').attr('transform','translate(715,560)').style('font-size',10);
+              
+         };
+           
+        
+             
+
+        </script>
+        
+    </body>
+</html>
