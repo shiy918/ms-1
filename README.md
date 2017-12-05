@@ -9,9 +9,7 @@ This visualizaion aims to provide a broad perspective for investigating enrollme
 Gender inequality is a major concern in education. I am bringing an extra perspective to compare the 
 differences in enrollment rates of each gender.
 
-<img width="770" alt="enrollment rates" src="https://user-images.githubusercontent.com/31075692/33588605-bb439116-d941-11e7-9719-4fd4319fd3af.png">
-
-
+<img width="770" alt="enrollment rates" src="https://user-images.githubusercontent.com/31075692/33588605-bb439116-d941-11e7-9719-4fd4319fd3af.png">(https://ms-1-shiy918.c9users.io/FinalUNDP/primary.html)
 
 #### Data Source
 World Bank https://data.worldbank.org/indicator/SE.PRM.ENRR?locations=ZG
