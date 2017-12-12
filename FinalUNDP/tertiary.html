@@ -232,15 +232,14 @@
           
            //read in data sets    
            d3.json("africa.geo.json",function(err,geojson){
-            //   console.log(geojson);
+    
                
                var geojson=geojson.features //an array
             
                
                 //parse the data set and bringout only the primary education
                 d3.csv('general.csv',function(err,education){
-                    
-                        // console.log(education);
+                
                         var rates={};
                         var primary=[];
                         var secondary=[];
@@ -308,9 +307,7 @@
                                     
                                     //append gini to geojson
                                     d3.csv('gini.csv',function(err,gini){
-                                        console.log(gini);
-                                    
-                                        
+                                
                                         for (var k=0;k<geojson.length;k++){
                                             
                                             for (var m=0;m<gini.length;m++){
@@ -321,9 +318,7 @@
                                         }
                                         
                                     })
-                
-                                 
-                            console.log(geojson);
+    
                             draw(geojson);
                 })
                     
@@ -364,7 +359,7 @@
                               //filter out zero values
                               var list_noZeros=list.filter(number=>number>0);
                               var length=list_noZeros.length;
-                            //   console.log(length);
+                           
                               
                               //add up all the values in the array
                               if (length>0){
@@ -372,7 +367,6 @@
                               var sum=list_noZeros.reduce(function(a,b){return a+b;})
                     
                                   average_rate=Math.round(sum/length);
-                                    //  console.log(average_rate);
                                   
                                   //append the new section to the original data set
                                    d.education_ter_total.average=average_rate;
@@ -409,7 +403,7 @@
                         d3.selectAll('#largeFill rect').remove();
                         d3.selectAll('#RecFeFill rect').remove();
                         d3.selectAll('#RecMaFill rect').remove();
-                        console.log(d);
+    
                         //change the color of the country once clicked
                         d3.select(this).attr('stroke','rgb(255,58,33)')
                                        .attr('stroke-width',5);
@@ -426,11 +420,9 @@
                        if (d.education_ter_total !== undefined){ 
                            
                             var values_total=d.education_ter_total;
-                            console.log(values_total);
                             
                             var list_of_values_total=[Math.round(values_total.eleven),Math.round(values_total.twelve),Math.round(values_total.thirteen),Math.round(values_total.fourteen),Math.round(values_total.fifteen),Math.round(values_total.sixteen)];
-                            console.log(list_of_values_total);
-                            
+                
                             var x=d3.scaleLinear()
                                     .domain([0,list_of_values_total.length])
                                     .range([15,350]);
