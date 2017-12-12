@@ -10,7 +10,7 @@ This visualizaion aims to provide a broad perspective to investigate enrollment 
 Gender inequality is a major concern in education. I am bringing an extra perspective to compare the 
 differences in enrollment rates from both male and female.
 
-[![UNDP.png](UNDP.png)](https://ms-1-shiy918.c9users.io/FinalUNDP/index.html)
+[![UNDP.png](UNDP.png)](https://shiy918.github.io/ms-1/FinalUNDP/index.html)
 
 #### Data Source
 World Bank 2016
