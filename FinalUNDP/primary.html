@@ -1,0 +1,729 @@
+<!DOCTYPE.html>
+<html> 
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <link rel='stylesheet' href='bootstrap.min.css'>
+        
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css' rel='stylesheet' />
+        <link href="https://fonts.googleapis.com/css?family=Karla|Open+Sans" rel="stylesheet">
+        
+        <style type=text/css>
+        
+           html,body, #wrapper{
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        
+            }
+        
+           #map {
+            position:relative;
+            width:100%;
+            height:100%;
+            
+            }
+            
+            svg{
+                position:absolute;
+                width:100%;
+                height:100%;
+            }
+            
+            .hidden{
+                display:none;
+            }
+            
+            .info {
+               background-color:rgba(241, 241, 241,0.7);
+             
+               position:fixed;
+               width:23vw ;
+               height: 90vw;
+               margin:50px 500px 10px 10px;
+               min-width: 200px;
+               z-index:1;
+            }
+            
+            .navbar-brand{
+                font-family: 'Open Sans', sans-serif;
+            }
+        
+            #title{
+                width:90%;
+                height:2%;
+                font-family: 'Karla', sans-serif;
+            }
+            
+            #total{
+                /*margin:20px 5px 0px 10px;*/
+                width:90%;
+                height:20%;
+            }
+            
+            #timeline {
+    
+                width:90%;
+                height:2%;
+            }
+            
+            #head{
+                margin-left:35vw;
+                font-size:30px;
+            }
+            
+            #nav{
+                margin-left:20vw;
+                
+            }
+            
+            #gender{
+               
+                width:90%;
+                height:20%;
+            }
+            
+            #info{
+               
+                width:80%;
+                height:10%;
+                font-family: 'Karla', sans-serif;
+            }
+            
+            #hover{
+                font-size:20px;
+                /*z-index:2;*/
+            }
+            
+            
+            .gradient{
+              position:fixed;
+              display:block;
+              /*background-color:rgba(175, 189, 198,0.50);*/
+              width:20vw;
+              height:10vh;
+              margin-right:10vw;
+              margin-top:70vh;
+              margin-left:80vw;
+              min-width:5vw;
+              z-index:1;
+            }
+            
+            #label2,#label3{
+                margin-top:5px;
+                margin-left:110px;
+                font-size:10px;
+            }
+            
+            #label1{
+                margin-top:5px;
+                font-size:10px;
+            }
+        
+            
+            
+            .key {
+                display:block;
+                list-style:square;
+                color:white;
+                font-size: 15px;
+            }
+            
+            
+            .key span {color:black;}
+            .key .yellow {color:#fcc30b;} 
+            .key .red  {color: rgb(255,58,33);}
+            .key .green  {color: #4c9f38;}
+            .key .empty{color:rgb(255, 255, 255);}
+            
+        </style>
+    </head>
+    
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color:#e8d7cc">
+              <a id='head' class="navbar-brand" href="#" >Higher Inequality, Lower Enrollment?</a>
+              <br>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              
+              <div id='nav' class="collapse navbar-collapse" id="navbarSupportedContent">
+                 <ul class="navbar-nav justify-content-end">
+                   <li class="nav-item">
+                       <a class="nav-link" href="index.html">Home</a>
+                   </li>  
+                   <li class="nav-item active">
+                       <a class="nav-link" href="primary.html">Primary</a>
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link" href="secondary.html">Secondary</a>  
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link" href="tertiary.html">Tertiary</a>
+                   </li>
+              </div>
+          </nav>
+            
+        </header>
+        
+        
+        
+        <div id='overlay' class='info'>
+                    <div class='container'>
+                        <div class='column'>
+                            <div id='title' class='row'><text style='font-size:20px;margin-left:20px;margin-top:30px'>Enrollment Rates</text></div>
+                            <div id='total' class='row'>
+                                <div class='col'><svg class='total' width='100%' height='100%'></svg></div>
+                            </div>
+                            <div id='timeline' class='row'>
+                                <div class='col'><svg class='timeline' width='100%' height='100%'></svg></div>
+                            </div>
+                            <div id='gender' class='row'>
+                                <div class='col'><svg class='gender' width='100%' height='100%'></svg></div>
+                            </div>
+                            <div id='info' class='row'>
+                               
+                               <ul class="key">
+                                  <li class="red"><span>Gross Enrollment Rates</span></li>
+                                  <li class="yellow"><span>Gross Rates for Female</span></li>     
+                                  <li class="green"><span>Gross Rates for Male</span></li>
+                                  <li class="empty"><span>Missing Data</span></li>
+                               </ul>
+                             </div>
+                          </div>
+                     </div>
+            
+        </div>
+        
+        <div id='overlay' class='gradient'>
+            <div class='container'>
+                <div class='row'>
+                    <div id='gradient' class='col'><img src='gradient.svg'></img></div>
+                </div>
+
+            </div>
+        </div>
+    
+           
+        <div id='wrapper'>
+                <div id='map'></div>
+        </div>
+        
+        
+        <script>
+        
+           //settings for the map
+           mapboxgl.accessToken = 'pk.eyJ1Ijoic2hpeTkxOCIsImEiOiJjajl6eW16ZTE4dXIyMzJzNHVpaGxhZmh4In0.K8ys9-jUCZma5DR_JlkxIA';
+         
+            var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/light-v9',  
+            center: [18.2812, 9.1021], // 9.1021° N, 18.2812° E
+            zoom: 3
+          });
+          
+          
+           
+          
+           //read in data sets    
+           d3.json("africa.geo.json",function(err,geojson){
+            //   console.log(geojson);
+               
+               var geojson=geojson.features //an array
+            
+               
+                //parse the data set and bringout only the primary education
+                d3.csv('general.csv',function(err,education){
+                    
+                        // console.log(education);
+                        var rates={};
+                        var primary=[];
+                        var secondary=[];
+                        var tertiary=[];
+                        
+                        for (var i=0; i<education.length;i++){
+                            
+                            var edu_level= education[i].Indicator_Code.split('.');
+                            if (edu_level[1]=='PRM'){ primary.push(education[i]);}
+                            else if (edu_level[1]=='SEC'){ secondary.push(education[i]);}
+                            else if (edu_level[1]=='TER'){ tertiary.push(education[i]);}
+                            
+                        }
+                        // console.log(primary);
+                        rates.primary=primary;
+                        rates.secondary=secondary;
+                        rates.tertiary=tertiary;
+                        // console.log(rates);
+                        
+                        //in primary, put each gender into seperate array
+                        var gender_pr={};
+                        var male_pr=[];
+                        var female_pr=[];
+                        var total_pr=[];
+                        
+                            for (var j=0; j<primary.length;j++){
+                                
+                                var category=primary[j].Indicator_Code.split('.');
+                                // console.log(category);
+                                if (category[3]=='MA'){ male_pr.push(primary[j]);}
+                                else if (category[3]=='FE') { female_pr.push(primary[j]);}
+                                else total_pr.push(primary[j]);
+                            }
+                
+                            // console.log(total);
+                            gender_pr.male=male_pr;
+                            gender_pr.female=female_pr;
+                            gender_pr.total=total_pr;
+                            
+                            // console.log(gender.total);
+                            
+                        var gender_se={};
+                        var male_se=[];
+                        var female_se=[];
+                        var total_se=[];
+                           
+                            for (var j=0; j<secondary.length;j++){
+                                
+                                var category=secondary[j].Indicator_Code.split('.');
+                                if (category[3]=='MA'){ male_se.push(secondary[j]);}
+                                else if (category[3]=='FE') { female_se.push(secondary[j]);}
+                                else total_se.push(secondary[j]);
+                             
+                            }
+                            
+                            gender_se.male=male_se;
+                            gender_se.female=female_se;
+                            gender_se.total=total_se;
+                            
+                            // console.log(gender_se.total);
+                            
+                        var gender_ter={};
+                        var male_ter=[];
+                        var female_ter=[];
+                        var total_ter=[];
+                            
+                            for(var j=0;j<tertiary.length;j++){
+                                
+                                var category=tertiary[j].Indicator_Code.split('.');
+                                if (category[3]=='MA'){ male_ter.push(tertiary[j]);}
+                                else if (category[3]=='FE') { female_ter.push(tertiary[j]);}
+                                else total_ter.push(tertiary[j]);
+                                
+                            }
+                            
+                            gender_ter.male=male_ter;
+                            gender_ter.female=female_ter;
+                            gender_ter.total=total_ter;
+                            
+                            // console.log(gender_pr);
+                            
+                                    //append the primary education categories to the geojson for each country
+                                    for(var k=0;k<geojson.length;k++){
+                                         
+                                        for (var m=0;m<gender_pr.total.length;m++){
+                                            
+                                            //match the country name and gender category
+                                            if (geojson[k].properties.sov_a3 == gender_pr.total[m].Country_Code){
+                                                
+                                                geojson[k].education_pr_total=gender_pr.total[m];
+                                                
+                                            }
+                                           
+                                        }
+                                        
+                                        for (var m=0; m<gender_pr.female.length;m++){
+                                            if (geojson[k].properties.sov_a3 == gender_pr.female[m].Country_Code){
+                                                geojson[k].education_pr_female=gender_pr.female[m];
+                                            }
+                                        }
+                                        
+                                        for (var m=0;m<gender_pr.male.length; m++){
+                                            if(geojson[k].properties.sov_a3 == gender_pr.male[m].Country_Code){
+                                                geojson[k].education_pr_male=gender_pr.male[m];
+                                            }
+                                        }
+                                    }
+                                    
+                                    
+                                    //append secondary education categories to the geojson for each country
+                                    for(var k=0;k<geojson.length;k++){
+                                        
+                                        for (var m=0;m<gender_se.total.length;m++){
+                                            
+                                            if (geojson[k].properties.sov_a3 ==gender_se.total[m].Country_Code){
+                                                geojson[k].education_se_total=gender_se.total[m];
+                                            }
+                                        }
+                                        
+                                        for(var m=0;m<gender_se.female.length;m++){
+                                            if (geojson[k].properties.sov_a3 == gender_se.female[m].Country_Code){
+                                                geojson[k].education_se_female=gender_se.female[m];
+                                        }
+                                        
+                                        for (var m=0;m<gender_se.male.length; m++){
+                                            if(geojson[k].properties.sov_a3 == gender_se.male[m].Country_Code){
+                                                geojson[k].education_se_male=gender_se.male[m];
+                                            }
+                                        }
+                                        
+                                        
+                                    }
+                                    
+                                 }
+                                 
+                                 //append tertiary education categories to the geojson for each country
+                                 for(var k=0;k<geojson.length;k++){
+                                        
+                                        for (var m=0;m<gender_ter.total.length;m++){
+                                            
+                                            if (geojson[k].properties.sov_a3 ==gender_ter.total[m].Country_Code){
+                                                geojson[k].education_ter_total=gender_ter.total[m];
+                                            }
+                                        }
+                                        
+                                        for(var m=0;m<gender_ter.female.length;m++){
+                                            if (geojson[k].properties.sov_a3 == gender_ter.female[m].Country_Code){
+                                                geojson[k].education_ter_female=gender_ter.female[m];
+                                            }
+                                        }
+                                        
+                                        for (var m=0;m<gender_ter.male.length; m++){
+                                            if(geojson[k].properties.sov_a3 == gender_ter.male[m].Country_Code){
+                                                geojson[k].education_ter_male=gender_ter.male[m];
+                                            }
+                                        }
+                                        
+                                        
+                                    }
+                                    
+                                    //append gini to geojson
+                                    d3.csv('gini.csv',function(err,gini){
+                                        console.log(gini);
+                                    
+                                        
+                                        for (var k=0;k<geojson.length;k++){
+                                            
+                                            for (var m=0;m<gini.length;m++){
+                                                if(geojson[k].properties.sov_a3 == gini[m].Countrycode3){
+                                                    geojson[k].gini_info=gini[m];
+                                                }
+                                            }
+                                        }
+                                        
+                                    })
+                
+                                 
+                            console.log(geojson);
+                            draw(geojson);
+                })
+                    
+           });
+           
+           
+          
+           
+           //draw the map
+           function draw(geojson){
+             
+               
+               map.addControl(new mapboxgl.NavigationControl(),'bottom-right');
+               
+               var container = map.getCanvasContainer()
+               var svg = d3.select(container).append('svg')
+               
+               var transform = d3.geoTransform({point: projectPoint});
+               var path = d3.geoPath().projection(transform);
+               
+               
+               //draw the map
+               var featureElement = svg.selectAll('path')
+            		.data(geojson)
+            		.enter()
+                    .append('path')
+                    .attr('d', d3.geoPath().projection(transform))
+                    .attr('stroke','none')
+                    .attr('fill','#0a97d9')
+                    .each(function(d){
+                        
+                        //find the average rate for each coutry from 2011 to 2016
+                       if ( d.education_pr_total !== undefined){
+                        
+                              var average_rate=0;
+                              var list=[Number(d.education_pr_total.eleven),Number(d.education_pr_total.twelve),Number(d.education_pr_total.thirteen),Number(d.education_pr_total.fourteen),Number(d.education_pr_total.fifteen),Number(d.education_pr_total.sixteen)];
+                             
+                              //filter out zero values
+                              var list_noZeros=list.filter(number=>number>0);
+                              var length=list_noZeros.length;
+                            //   console.log(length);
+                              
+                              //add up all the values in the array
+                              if (length>0){
+                                 
+                              var sum=list_noZeros.reduce(function(a,b){return a+b;})
+                    
+                                  average_rate=Math.round(sum/length);
+                                    //  console.log(average_rate);
+                                  
+                                  //append the new section to the original data set
+                                   d.education_pr_total.average=average_rate;
+                              }
+                             
+                       }
+                    })
+                    
+                    .attr('fill-opacity',function(d){
+                        
+                      var opacity=0;
+                        
+                        if(d.education_pr_total!==undefined){
+                            
+                            if(d.education_pr_total.average !== undefined){
+                        
+                             var range=d3.scaleLinear()
+                                        .domain([0,150])
+                                        .range([0,1]);
+                                
+                              var opacity= range(d.education_pr_total.average);
+                            
+                             return opacity;
+                            }
+                            else return 0;
+                        }
+                        else return 0;
+                    })
+                   
+                    .on('mouseover',function(d){
+                        
+                        // svg.selectAll('path').attr('fill','#0a97d9')
+                        // d3.select(this).attr('fill').remove();
+                        d3.selectAll('#largeFill rect').remove();
+                        d3.selectAll('#RecFeFill rect').remove();
+                        d3.selectAll('#RecMaFill rect').remove();
+                        console.log(d);
+                        //change the color of the country once clicked
+                        d3.select(this).attr('stroke','rgb(255,58,33)')
+                                       .attr('stroke-width',5);
+                        
+                        // console.log(d.gini_info.Gini+'|'+d.gini_info.Incomegroup);               
+                        if (d.gini_info !== undefined){
+                            
+                            d3.select('#hover')
+                              .text('Gini:'+d.gini_info.Gini+' | '+d.gini_info.Incomegroup)
+                              .attr('fill','rgb(79, 84, 89)')
+                              .attr('fill-opacity',1);
+                        }
+                                       
+                       if (d.education_pr_total !== undefined){ 
+                           
+                            var values_total=d.education_pr_total;
+                            console.log(values_total);
+                            
+                            var list_of_values_total=[Math.round(values_total.eleven),Math.round(values_total.twelve),Math.round(values_total.thirteen),Math.round(values_total.fourteen),Math.round(values_total.fifteen),Math.round(values_total.sixteen)];
+                            console.log(list_of_values_total);
+                            
+                            var x=d3.scaleLinear()
+                                    .domain([0,list_of_values_total.length])
+                                    .range([15,350]);
+                                    
+                            
+                            //fill the rectangles total
+                            d3.select('#largeFill')
+                              .selectAll('rect')
+                              .data(list_of_values_total)
+                              .enter()
+                              .append('rect')
+                              .attr('x',function(d,i){return x(i);})
+                              .attr('y',function(d,i){return 280-list_of_values_total[i]*2;})
+                              .attr('width',50)
+                              .attr('height',function(d,i){return list_of_values_total[i]*2;})
+                              .attr('fill','rgb(255,58,33)');
+                              
+                            //fill the rectangles for female  
+                            var values_female=d.education_pr_female;  
+                            var list_of_values_female=[Math.round(values_female.eleven),Math.round(values_female.twelve),Math.round(values_female.thirteen),Math.round(values_female.fourteen),Math.round(values_female.fifteen),Math.round(values_female.sixteen)];
+                              
+                            d3.select('#RecFeFill')
+                              .selectAll('rect')
+                              .data(list_of_values_female)
+                              .enter()
+                              .append('rect')
+                              .attr('x',function(d,i){return x(i);})
+                              .attr('y',function(d,i){return 120-list_of_values_female[i]*0.8;})
+                              .attr('width',50)
+                              .attr('height', function(d,i){return list_of_values_female[i]*0.8;})
+                              .attr('fill','#fcc30b');
+                           
+                           
+                            //fill the rectangles for male 
+                            var values_male=d.education_pr_male;  
+                            var list_of_values_male=[Math.round(values_male.eleven),Math.round(values_male.twelve),Math.round(values_male.thirteen),Math.round(values_male.fourteen),Math.round(values_male.fifteen),Math.round(values_male.sixteen)];
+                            
+                            d3.select('#RecMaFill')
+                              .selectAll('rect')
+                              .data(list_of_values_male)
+                              .enter()
+                              .append('rect')
+                              .attr('x',function(d,i){return x(i);})
+                              .attr('y',function(d,i){return 240-list_of_values_male[i]*0.8;})
+                              .attr('width',50)
+                              .attr('height',function(d,i){return list_of_values_male[i]*0.8;})
+                              .attr('fill','#4c9f38');
+                              
+                          
+                        
+                       } 
+                      
+                        
+                    })
+                    
+                   .on('mouseout', function() {
+                       d3.select(this).attr('stroke', 'none');
+                       d3.select('#hover').attr('fill-opacity', 0);
+                    
+                   })
+                
+                    .on('mousemove', function(d) {
+                    d3.select('#hover')
+                        .attr('x', function() { return d3.mouse(this)[0] + 20; })
+                        .attr('y', function() { return d3.mouse(this)[1] + 10; });
+                   })
+                    
+               
+                
+                // text element for hover to show gini
+                svg.append("text")
+                    .attr('id', 'hover');
+                    
+
+                function update() {
+                    featureElement.attr("d", path);
+                }
+
+                map.on("viewreset", update)
+                map.on("movestart", function(){
+            		svg.classed("hidden", true); 
+            	});
+                map.on("rotate", function(){
+            		svg.classed("hidden", true);
+            	});
+                map.on("moveend", function(){
+            		update();
+            		svg.classed("hidden", false);
+            	});
+
+                update();
+
+            	function projectPoint(lon, lat) {
+                    var point = map.project(new mapboxgl.LngLat(lon, lat));
+            		this.stream.point(point.x, point.y);
+            	}
+            	
+            	
+            	
+            	var years=['2011','2012','2013','2014','2015','2016']
+            	var x=d3.scaleLinear()
+                    .domain([0, years.length])
+                    .range([15,350]);
+            	
+            	//draw rectangles
+            	var totalgraph=d3.select('.total')
+                totalgraph.append('g').attr('id','largeRec');
+                var largeRec=totalgraph.select('#largeRec');
+                       
+                totalgraph.append('g').attr('id','largeFill');
+                var largeFill=totalgraph.select('#largeFill');
+                
+                //label the graph
+                totalgraph.append('text').attr('x',0).attr('y',80).text('100%').style('font-size',10);
+                totalgraph.append('text').attr('x',0).attr('y',280).text('0%').style('font-size',10);
+                       
+                largeRec.selectAll('rect')
+                        .data(years)
+                        .enter()
+                        .append('rect')
+                          .attr('x',function(d,i){return x(i);})
+                          .attr('y',80)
+                          .attr('width',50)
+                          .attr('height',200)
+                          .style('fill','white')
+                          .style('fill-opacity',0.8)
+                          .style('stroke','grey');
+                          
+                          
+                          
+                
+                d3.select('.timeline').selectAll('text')
+                                      .data(years)
+                                      .enter()
+                                      .append('text')
+                                      .attr('x',function(d,i){return x(i);})
+                                      .attr('y',15)
+                                      .attr('transform','translate(5,0)')
+                                      .text(function(d,i){ return years[i]; })
+                                      
+                                      
+                //gender section, draw empty rectangles
+                var gendergraph=d3.select('.gender');
+                gendergraph.append('g').attr('id','largeRecFe');
+                var largeRecFe=gendergraph.select('#largeRecFe');
+                
+                gendergraph.append('g').attr('id','RecFeFill');
+                var RecFeFill=gendergraph.select('#RecFeFill');
+                
+                //label the graph
+                gendergraph.append('text').attr('x',0).attr('y',40).text('100%').style('font-size',10);
+                gendergraph.append('text').attr('x',0).attr('y',120).text('0%').style('font-size',10);
+                //label the graph
+                gendergraph.append('text').attr('x',0).attr('y',160).text('100%').style('font-size',10);
+                gendergraph.append('text').attr('x',0).attr('y',240).text('0%').style('font-size',10);
+                
+                gendergraph.append('g').attr('id','largeRecMa');
+                var largeRecMa=gendergraph.select('#largeRecMa');
+                
+                gendergraph.append('g').attr('id','RecMaFill');
+                var RecMaFill=gendergraph.select('#RecMaFill');
+                
+                largeRecFe.selectAll('rect')
+                           .data(years)
+                           .enter()
+                           .append('rect')
+                            .attr('x',function(d,i){return x(i);})
+                            .attr('y',40)
+                            .attr('width',50)
+                            .attr('height',80)
+                            .style('fill','white')
+                            .style('fill-opacity',0.8)
+                            .style('stroke','grey');
+                          
+                
+                largeRecMa.selectAll('rect')
+                           .data(years)
+                           .enter()
+                           .append('rect')
+                            .attr('x',function(d,i){return x(i);})
+                            .attr('y',40)
+                            .attr('width',50)
+                            .attr('height',80)
+                            .attr('transform','translate(0,120)')
+                            .style('fill','white')
+                            .style('fill-opacity',0.8)
+                            .style('stroke','grey');
+              
+                         
+            }
+            
+           
+      
+                 
+            
+            
+            
+            
+        </script>
+    </body>
+</html>

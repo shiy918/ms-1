@@ -1,0 +1,43 @@
+Country,Countrycode3,Year,POP,Incomegroup,Gini,Source
+Angola,AGO,2008,19.842251,Upper middle income,42.72,World Bank 2016
+Belize,BLZ,1999,0.239024,Upper middle income,53.26,World Bank 2016
+Botswana,BWA,2009,2.007212,Upper middle income,60.46,World Bank 2016
+Burkina Faso,BFA,2014,17.589198,Low income,35.3,World Bank 2016
+Burundi,BDI,2006,8.21807,Low income,33.36,World Bank 2016
+Cameroon,CMR,2014,22.773014,Lower middle income,46.54,World Bank 2016
+Central African Republic,CAF,2008,4.280405,Low income,56.24,World Bank 2016
+Chad,TCD,2011,12.298512,Low income,43.32,World Bank 2016
+Comoros,COM,2004,0.603869,Low income,55.93,World Bank 2016
+"Congo, Republic of the",COG,2011,4.177435,Lower middle income,48.94,World Bank 2016
+Cote d'Ivoire,CIV,2008,19.261647,Lower middle income,43.18,World Bank 2016
+Ethiopia,ETH,2010,87.561814,Low income,33.17,World Bank 2016
+Gabon,GAB,2005,1.377777,Upper middle income,42.18,World Bank 2016
+"Gambia, The",GMB,2003,1.350345,Low income,47.33,World Bank 2016
+Guinea,GIN,2012,11.628767,Low income,33.73,World Bank 2016
+Guinea-Bissau,GNB,2010,1.634196,Low income,50.66,World Bank 2016
+Kenya,KEN,2005,35.34904,Lower middle income,48.51,World Bank 2016
+Lesotho,LSO,2010,2.010586,Lower middle income,54.18,World Bank 2016
+Liberia,LBR,2007,3.522337,Low income,36.48,World Bank 2016
+Madagascar,MDG,2012,22.29372,Low income,42.65,World Bank 2016
+Malawi,MWI,2010,14.769824,Low income,46.12,World Bank 2016
+Mali,MLI,2009,14.694565,Low income,33.04,World Bank 2016
+Mauritania,MRT,2014,3.969625,Lower middle income,32.42,World Bank 2016
+Mauritius,MUS,2012,1.258335,Upper middle income,35.84,World Bank 2016
+Mozambique,MOZ,2008,22.994867,Low income,45.58,World Bank 2016
+Namibia,NAM,2009,2.152357,Upper middle income,60.97,World Bank 2016
+Niger,NER,2014,19.113728,Low income,33.99,World Bank 2016
+Nigeria,NGA,2009,155.207145,Lower middle income,42.97,World Bank 2016
+Rwanda,RWA,2013,11.078095,Low income,50.44,World Bank 2016
+Sao Tome and Principe,STP,2010,0.17088,Lower middle income,30.82,World Bank 2016
+Senegal,SEN,2011,13.357003,Lower middle income,40.29,World Bank 2016
+Seychelles,SYC,2013,0.095215,High income: non-OECD,46.82,World Bank 2016
+Sierra Leone,SLE,2011,5.908908,Low income,33.99,World Bank 2016
+South Africa,ZAF,2011,52.237272,Upper middle income,63.38,World Bank 2016
+South Sudan,SSD,2009,,Low income,46.34,World Bank 2016
+Sudan,SDN,2009,44.920474,Lower middle income,35.39,World Bank 2016
+Swaziland,SWZ,2009,1.173529,Lower middle income,51.45,World Bank 2016
+Tanzania,TZA,2011,45.810882,Low income,37.78,World Bank 2016
+Togo,TGO,2011,6.566179,Low income,46.02,World Bank 2016
+Uganda,UGA,2012,35.40062,Low income,41.01,World Bank 2016
+Zambia,ZMB,2010,13.917439,Lower middle income,55.62,World Bank 2016
+Zimbabwe,ZWE,2011,14.255592,Low income,43.15,World Bank 2016
