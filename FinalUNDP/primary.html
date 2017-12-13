@@ -5,7 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         
         <link rel='stylesheet' href='bootstrap.min.css'>
-        
+        <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.js'></script>
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css' rel='stylesheet' />
@@ -72,14 +75,11 @@
             }
             
             #head{
-                margin-left:35vw;
+                /*margin-left:35vw;*/
                 font-size:30px;
             }
             
-            #nav{
-                margin-left:20vw;
-                
-            }
+           
             
             #gender{
                
@@ -135,9 +135,9 @@
             
             
             .key span {color:black;}
-            .key .yellow {color:#fcc30b;} 
-            .key .red  {color: rgb(255,58,33);}
-            .key .green  {color: #4c9f38;}
+            .key .yellow {color:#fd9d24;} 
+            .key .red  {color: #e5243b;}
+            .key .blue {color: #00689d;}
             .key .empty{color:rgb(255, 255, 255);}
             
         </style>
@@ -153,9 +153,9 @@
               </button>
               
               <div id='nav' class="collapse navbar-collapse" id="navbarSupportedContent">
-                 <ul class="navbar-nav justify-content-end">
+                 <ul class="navbar-nav">
                    <li class="nav-item">
-                       <a class="nav-link" href="index.html">Home</a>
+                       <a class="nav-link" href="index.html">About</a>
                    </li>  
                    <li class="nav-item active">
                        <a class="nav-link" href="primary.html">Primary</a>
@@ -191,7 +191,7 @@
                                <ul class="key">
                                   <li class="red"><span>Gross Enrollment Rates</span></li>
                                   <li class="yellow"><span>Gross Rates for Female</span></li>     
-                                  <li class="green"><span>Gross Rates for Male</span></li>
+                                  <li class="blue"><span>Gross Rates for Male</span></li>
                                   <li class="empty"><span>Missing Data</span></li>
                                </ul>
                              </div>
@@ -203,7 +203,7 @@
         <div id='overlay' class='gradient'>
             <div class='container'>
                 <div class='row'>
-                    <div id='gradient' class='col'><img src='gradient.svg'></img></div>
+                    <div id='gradient' class='col'><img src='gradient2.svg'></img></div>
                 </div>
 
             </div>
@@ -441,7 +441,7 @@
                     .append('path')
                     .attr('d', d3.geoPath().projection(transform))
                     .attr('stroke','none')
-                    .attr('fill','#0a97d9')
+                    .attr('fill','rgb(221,166,58)')
                     .each(function(d){
                         
                         //find the average rate for each coutry from 2011 to 2016
@@ -497,16 +497,33 @@
                         d3.selectAll('#RecMaFill rect').remove();
                         
                         //change the color of the country once clicked
-                        d3.select(this).attr('stroke','rgb(255,58,33)')
+                        d3.select(this).attr('stroke','#e5243b')
                                        .attr('stroke-width',5);
                         
                                      
                         if (d.gini_info !== undefined){
                             
-                            d3.select('#hover')
-                              .text('Gini:'+d.gini_info.Gini+' | '+d.gini_info.Incomegroup)
-                              .attr('fill','rgb(79, 84, 89)')
-                              .attr('fill-opacity',1);
+                            if(Number(d.gini_info.Gini)>=50){
+                            
+                                d3.select('#hover')
+                                  .text('Gini:'+d.gini_info.Gini+' '+'High'+' | '+d.gini_info.Incomegroup)
+                                  .attr('fill','rgb(79, 84, 89)')
+                                  .attr('fill-opacity',1);
+                            }
+                            
+                            else if (Number(d.gini_info.Gini)>=30){
+                                
+                                d3.select('#hover')
+                                  .text('Gini:'+d.gini_info.Gini+' '+'Medium'+' | '+d.gini_info.Incomegroup)
+                                  .attr('fill','rgb(79, 84, 89)')
+                                  .attr('fill-opacity',1);
+                            }
+                            else {
+                                 d3.select('#hover')
+                                  .text('Gini:'+d.gini_info.Gini+' '+'Low'+' | '+d.gini_info.Incomegroup)
+                                  .attr('fill','rgb(79, 84, 89)')
+                                  .attr('fill-opacity',1);
+                            }
                         }
                                        
                        if (d.education_pr_total !== undefined){ 
@@ -530,7 +547,7 @@
                               .attr('y',function(d,i){return 280-list_of_values_total[i]*2;})
                               .attr('width',50)
                               .attr('height',function(d,i){return list_of_values_total[i]*2;})
-                              .attr('fill','rgb(255,58,33)');
+                              .attr('fill','#e5243b');
                               
                             //fill the rectangles for female  
                             var values_female=d.education_pr_female;  
@@ -545,7 +562,7 @@
                               .attr('y',function(d,i){return 120-list_of_values_female[i]*0.8;})
                               .attr('width',50)
                               .attr('height', function(d,i){return list_of_values_female[i]*0.8;})
-                              .attr('fill','#fcc30b');
+                              .attr('fill','#fd9d24');
                            
                            
                             //fill the rectangles for male 
@@ -561,7 +578,7 @@
                               .attr('y',function(d,i){return 240-list_of_values_male[i]*0.8;})
                               .attr('width',50)
                               .attr('height',function(d,i){return list_of_values_male[i]*0.8;})
-                              .attr('fill','#4c9f38');
+                              .attr('fill','#00689d');
                         
                        } 
                       

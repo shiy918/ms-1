@@ -143,10 +143,10 @@
             <div class="container">
                
                 <div id='intro' class="row">
-                   <div class='col'>
+                   <div class='col-sm-6 col-md-4 col-lg-4'>
                         <h1>Inequality and Education</h1>
                     </div>
-                    <div id='text1' class='col-8'>
+                    <div id='text1' class='col-sm-6 col-md-8 col-lg-8'>
                        <p>Inequality is measured by Gini coefficient. The higher the Gini, the more unequal a country is. The deficiency in education enrollment has become one of the major factors 
                           that contribute to inequality in Sub-Saharan African countries. This visualization aims to investigate the relationship between inequality and enrollment rates in primary, 
                           secondary and tertiary education, with an additional scope of difference in enrollment from both female and male. 
@@ -154,10 +154,10 @@
                     </div>
                 </div>
                 <div id='description' class="row">
-                    <div class='col'>
+                    <div class='col-sm-6 col-md-4 col-lg-4'>
                         <h1>Gross Enrollment Rate</h1>
                     </div>
-                    <div id='text2' class='col-8'>
+                    <div id='text2' class='col-sm-6 col-md-8 col-lg-8'>
                         <p>Gross enrollment ratio is the ratio of total enrollment, regardless of age, to the population of the age group that officially corresponds to the level of education shown.
                         </p>
                     </div>
@@ -207,7 +207,7 @@
             		.enter()
                     .append('path')
                     .attr('d', d3.geoPath().projection(transform))
-                    .attr('fill','#0a97d9')
+                    .attr('fill','rgb(221,166,58)')
                     .attr('fill-opacity',0.2);
                     
     
