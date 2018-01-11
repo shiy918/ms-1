@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         
         <link rel='stylesheet' href='bootstrap.min.css'>
-        
+        <script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.js'></script>
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css' rel='stylesheet' />
@@ -41,8 +41,8 @@
                background-color:rgba(241, 241, 241,0.7);
              
                position:fixed;
-               width:23vw ;
-               height: 90vw;
+               width:25vw ;
+               height: 95vw;
                margin:50px 500px 10px 10px;
                min-width: 200px;
                z-index:1;
@@ -435,8 +435,10 @@
                 
                             var x=d3.scaleLinear()
                                     .domain([0,list_of_values_total.length])
-                                    .range([15,350]);
+                                    .range([15,$('#total').width()]);
                                     
+                            var height=$('#total').height();
+                            var heightt=$('#gender').height();
                             
                             //fill the rectangles total
                             d3.select('#largeFill')
@@ -445,9 +447,9 @@
                               .enter()
                               .append('rect')
                               .attr('x',function(d,i){return x(i);})
-                              .attr('y',function(d,i){return 280-list_of_values_total[i]*2;})
-                              .attr('width',50)
-                              .attr('height',function(d,i){return list_of_values_total[i]*2;})
+                              .attr('y',function(d,i){return height/3+height*2/3-(list_of_values_total[i]*(height*2/3))/100;})
+                              .attr('width',$('#total').width()/8)
+                              .attr('height',function(d,i){return (list_of_values_total[i]*(height*2/3))/100;})
                               .attr('fill','#e5243b');
                               
                             //fill the rectangles for female  
@@ -460,9 +462,9 @@
                               .enter()
                               .append('rect')
                               .attr('x',function(d,i){return x(i);})
-                              .attr('y',function(d,i){return 120-list_of_values_female[i]*0.8;})
-                              .attr('width',50)
-                              .attr('height', function(d,i){return list_of_values_female[i]*0.8;})
+                              .attr('y',function(d,i){return heightt/3+40-(list_of_values_female[i]*(heightt/3))/100;})
+                              .attr('width',$('#gender').width()/8)
+                              .attr('height', function(d,i){return (list_of_values_female[i]*(heightt/3))/100;})
                               .attr('fill','#fd9d24');
                            
                            
@@ -476,9 +478,9 @@
                               .enter()
                               .append('rect')
                               .attr('x',function(d,i){return x(i);})
-                              .attr('y',function(d,i){return 240-list_of_values_male[i]*0.8;})
-                              .attr('width',50)
-                              .attr('height',function(d,i){return list_of_values_male[i]*0.8;})
+                              .attr('y',function(d,i){return (heightt/3+40)*2-(list_of_values_male[i]*(heightt/3))/100;})
+                              .attr('width',$('#gender').width()/8)
+                              .attr('height',function(d,i){return (list_of_values_male[i]*(heightt/3))/100;})
                               .attr('fill','#00689d');
                               
                           
@@ -535,8 +537,10 @@
             	var years=['2011','2012','2013','2014','2015','2016']
             	var x=d3.scaleLinear()
                     .domain([0, years.length])
-                    .range([15,350]);
-            	
+                     .range([15,$('#total').width()]);
+            
+                var height=$('#total').height();
+                
             	//draw rectangles
             	var totalgraph=d3.select('.total')
                 totalgraph.append('g').attr('id','largeRec');
@@ -546,23 +550,22 @@
                 var largeFill=totalgraph.select('#largeFill');
                 
                 //label the graph
-                totalgraph.append('text').attr('x',0).attr('y',80).text('100%').style('font-size',10);
-                totalgraph.append('text').attr('x',0).attr('y',280).text('0%').style('font-size',10);
+                totalgraph.append('text').attr('x',0).attr('y',height/3).text('100%').style('font-size',10);
+                totalgraph.append('text').attr('x',0).attr('y',height*2/3+height/3).text('0%').style('font-size',10);
                        
                 largeRec.selectAll('rect')
                         .data(years)
                         .enter()
                         .append('rect')
                           .attr('x',function(d,i){return x(i);})
-                          .attr('y',80)
-                          .attr('width',50)
-                          .attr('height',200)
+                          .attr('y',height/3)
+                          .attr('width',$('#total').width()/8)
+                          .attr('height',height*2/3)
                           .style('fill','white')
                           .style('fill-opacity',0.8)
                           .style('stroke','grey');
                           
-                          
-                          
+                                 
                 
                 d3.select('.timeline').selectAll('text')
                                       .data(years)
@@ -570,8 +573,10 @@
                                       .append('text')
                                       .attr('x',function(d,i){return x(i);})
                                       .attr('y',15)
-                                      .attr('transform','translate(5,0)')
+                                    //   .attr('transform','translate(5,0)')
                                       .text(function(d,i){ return years[i]; })
+                                      
+                var heightt=$('#gender').height();
                                       
                                       
                 //gender section, draw empty rectangles
@@ -584,10 +589,10 @@
                 
                 //label the graph
                 gendergraph.append('text').attr('x',0).attr('y',40).text('100%').style('font-size',10);
-                gendergraph.append('text').attr('x',0).attr('y',120).text('0%').style('font-size',10);
+                gendergraph.append('text').attr('x',0).attr('y',40+heightt/3).text('0%').style('font-size',10);
                 //label the graph
-                gendergraph.append('text').attr('x',0).attr('y',160).text('100%').style('font-size',10);
-                gendergraph.append('text').attr('x',0).attr('y',240).text('0%').style('font-size',10);
+                gendergraph.append('text').attr('x',0).attr('y',heightt/3+40+40).text('100%').style('font-size',10);
+                gendergraph.append('text').attr('x',0).attr('y',heightt/3+40+40+heightt/3).text('0%').style('font-size',10);
                 
                 gendergraph.append('g').attr('id','largeRecMa');
                 var largeRecMa=gendergraph.select('#largeRecMa');
@@ -601,8 +606,8 @@
                            .append('rect')
                             .attr('x',function(d,i){return x(i);})
                             .attr('y',40)
-                            .attr('width',50)
-                            .attr('height',80)
+                            .attr('width',$('#gender').width()/8)
+                            .attr('height',heightt/3)
                             .style('fill','white')
                             .style('fill-opacity',0.8)
                             .style('stroke','grey');
@@ -613,10 +618,10 @@
                            .enter()
                            .append('rect')
                             .attr('x',function(d,i){return x(i);})
-                            .attr('y',40)
-                            .attr('width',50)
-                            .attr('height',80)
-                            .attr('transform','translate(0,120)')
+                            .attr('y',heightt/3+40+40)
+                            .attr('width',$('#gender').width()/8)
+                            .attr('height',heightt/3)
+                            // .attr('transform','translate(0,120)')
                             .style('fill','white')
                             .style('fill-opacity',0.8)
                             .style('stroke','grey');
